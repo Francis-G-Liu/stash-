@@ -1,0 +1,178 @@
+# ============================================================
+# Stash 覆写配置
+# 来源: Apple HT210060 (support.apple.com/en-us/101555)
+#        + OpenAI + Google 全域名
+# 说明: 所有匹配域名强制走代理 (请将 PROXY 替换为你实际的代理组名称)
+# ============================================================
+
+name: "Apple + OpenAI + Google 全代理覆写"
+
+# ---------- 规则集引用（可选，用于更新维护） ----------
+rule-providers:
+  apple-enterprise:
+    type: http
+    behavior: domain
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple.yaml"
+    path: ./rules/apple.yaml
+    interval: 86400
+
+  openai:
+    type: http
+    behavior: domain
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.yaml"
+    path: ./rules/openai.yaml
+    interval: 86400
+
+  google:
+    type: http
+    behavior: domain
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.yaml"
+    path: ./rules/google.yaml
+    interval: 86400
+
+# ---------- 覆写规则（prepend 确保优先匹配） ----------
+override:
+  rules:
+    prepend:
+      # ========== Apple 企业网络域名 (HT210060 / 101555) ==========
+      # Apple 核心服务
+      - DOMAIN-SUFFIX,apple.com,PROXY
+      - DOMAIN-SUFFIX,apple-cloudkit.com,PROXY
+      - DOMAIN-SUFFIX,apple.news,PROXY
+      - DOMAIN-SUFFIX,apple-mapkit.com,PROXY
+      - DOMAIN-SUFFIX,appattest.apple.com,PROXY
+
+      # iCloud 服务
+      - DOMAIN-SUFFIX,icloud.com,PROXY
+      - DOMAIN-SUFFIX,icloud-content.com,PROXY
+      - DOMAIN-SUFFIX,apple-datastore.com,PROXY
+
+      # App Store / 内容分发
+      - DOMAIN-SUFFIX,mzstatic.com,PROXY
+      - DOMAIN-SUFFIX,apps.apple.com,PROXY
+      - DOMAIN-SUFFIX,itunes.apple.com,PROXY
+      - DOMAIN-SUFFIX,phobos.apple.com,PROXY
+
+      # Apple Push Notification (APNs)
+      - DOMAIN-SUFFIX,push.apple.com,PROXY
+      - DOMAIN,courier.push.apple.com,PROXY
+      - DOMAIN-SUFFIX,apns.apple.com,PROXY
+
+      # 软件更新
+      - DOMAIN-SUFFIX,swscan.apple.com,PROXY
+      - DOMAIN-SUFFIX,swdist.apple.com,PROXY
+      - DOMAIN-SUFFIX,swcdn.apple.com,PROXY
+      - DOMAIN-SUFFIX,swquery.apple.com,PROXY
+      - DOMAIN-SUFFIX,updates.cdn-apple.com,PROXY
+      - DOMAIN-SUFFIX,configuration.apple.com,PROXY
+
+      # 设备激活 / MDM
+      - DOMAIN-SUFFIX,albert.apple.com,PROXY
+      - DOMAIN-SUFFIX,captive.apple.com,PROXY
+      - DOMAIN-SUFFIX,deviceenrollment.apple.com,PROXY
+      - DOMAIN-SUFFIX,deviceservices-external.apple.com,PROXY
+      - DOMAIN-SUFFIX,gdmf.apple.com,PROXY
+      - DOMAIN-SUFFIX,gs.apple.com,PROXY
+      - DOMAIN-SUFFIX,humb.apple.com,PROXY
+      - DOMAIN-SUFFIX,identity.apple.com,PROXY
+      - DOMAIN-SUFFIX,iphone-ld.apple.com,PROXY
+      - DOMAIN-SUFFIX,isu.apple.com,PROXY
+      - DOMAIN-SUFFIX,itescrow.apple.com,PROXY
+      - DOMAIN-SUFFIX,mdmenrollment.apple.com,PROXY
+      - DOMAIN-SUFFIX,setup.icloud.com,PROXY
+      - DOMAIN-SUFFIX,vpp.itunes.apple.com,PROXY
+
+      # 时间同步
+      - DOMAIN-SUFFIX,time.apple.com,PROXY
+      - DOMAIN-SUFFIX,time-ios.apple.com,PROXY
+      - DOMAIN-SUFFIX,time-macos.apple.com,PROXY
+
+      # Siri / AI
+      - DOMAIN-SUFFIX,siri.apple.com,PROXY
+      - DOMAIN-SUFFIX,guzzoni.apple.com,PROXY
+      - DOMAIN-SUFFIX,api.siri.apple.com,PROXY
+
+      # Apple 地图
+      - DOMAIN-SUFFIX,maps.apple.com,PROXY
+      - DOMAIN-SUFFIX,api.apple-mapkit.com,PROXY
+      - DOMAIN-SUFFIX,cdn3.apple-mapkit.com,PROXY
+      - DOMAIN-SUFFIX,cdn4.apple-mapkit.com,PROXY
+      - DOMAIN-SUFFIX,cdn5.apple-mapkit.com,PROXY
+
+      # FaceTime / iMessage
+      - DOMAIN-SUFFIX,facetime.apple.com,PROXY
+      - DOMAIN-SUFFIX,itunes.apple.com,PROXY
+
+      # Apple Analytics / 崩溃报告
+      - DOMAIN-SUFFIX,radarsubmissions.apple.com,PROXY
+      - DOMAIN-SUFFIX,feedbackws.icloud.com,PROXY
+
+      # Game Center
+      - DOMAIN-SUFFIX,gc.apple.com,PROXY
+      - DOMAIN-SUFFIX,gamecenter.apple.com,PROXY
+
+      # Apple TV / 流媒体
+      - DOMAIN-SUFFIX,tv.apple.com,PROXY
+      - DOMAIN-SUFFIX,itunesstore.apple.com,PROXY
+
+      # Akamai CDN（Apple 使用）
+      - DOMAIN-SUFFIX,cdn-apple.com,PROXY
+      - DOMAIN-SUFFIX,aaplimg.com,PROXY
+
+      # ========== OpenAI ==========
+      - DOMAIN-SUFFIX,openai.com,PROXY
+      - DOMAIN-SUFFIX,api.openai.com,PROXY
+      - DOMAIN-SUFFIX,chatgpt.com,PROXY
+      - DOMAIN-SUFFIX,auth0.openai.com,PROXY
+      - DOMAIN-SUFFIX,oaiusercontent.com,PROXY
+      - DOMAIN-SUFFIX,oaidatapipeline.com,PROXY
+      - DOMAIN-SUFFIX,openaiapi-site.azureedge.net,PROXY
+      - DOMAIN-SUFFIX,sora.com,PROXY
+      - DOMAIN-SUFFIX,operator.chatgpt.com,PROXY
+
+      # ========== Google 全系列 ==========
+      - DOMAIN-SUFFIX,google.com,PROXY
+      - DOMAIN-SUFFIX,googleapis.com,PROXY
+      - DOMAIN-SUFFIX,googleusercontent.com,PROXY
+      - DOMAIN-SUFFIX,googlevideo.com,PROXY
+      - DOMAIN-SUFFIX,googleadservices.com,PROXY
+      - DOMAIN-SUFFIX,googleanalytics.com,PROXY
+      - DOMAIN-SUFFIX,googlecode.com,PROXY
+      - DOMAIN-SUFFIX,googlesyndication.com,PROXY
+      - DOMAIN-SUFFIX,googletagmanager.com,PROXY
+      - DOMAIN-SUFFIX,googletagservices.com,PROXY
+      - DOMAIN-SUFFIX,google-analytics.com,PROXY
+      - DOMAIN-SUFFIX,gstatic.com,PROXY
+      - DOMAIN-SUFFIX,gvt1.com,PROXY
+      - DOMAIN-SUFFIX,gvt2.com,PROXY
+      - DOMAIN-SUFFIX,gvt3.com,PROXY
+      - DOMAIN-SUFFIX,gcr.io,PROXY
+      - DOMAIN-SUFFIX,gmail.com,PROXY
+      - DOMAIN-SUFFIX,googledrive.com,PROXY
+      - DOMAIN-SUFFIX,youtube.com,PROXY
+      - DOMAIN-SUFFIX,ytimg.com,PROXY
+      - DOMAIN-SUFFIX,youtu.be,PROXY
+      - DOMAIN-SUFFIX,googletrust.com,PROXY
+      - DOMAIN-SUFFIX,pki.google.com,PROXY
+      - DOMAIN-SUFFIX,google.cn,PROXY
+      - DOMAIN-SUFFIX,google.co.jp,PROXY
+      - DOMAIN-SUFFIX,google.com.hk,PROXY
+      - DOMAIN-SUFFIX,android.com,PROXY
+      - DOMAIN-SUFFIX,googlebot.com,PROXY
+      - DOMAIN-SUFFIX,chromium.org,PROXY
+      - DOMAIN-SUFFIX,googleplex.com,PROXY
+      - DOMAIN-SUFFIX,withgoogle.com,PROXY
+      - DOMAIN-SUFFIX,g.co,PROXY
+      - DOMAIN-SUFFIX,goo.gl,PROXY
+      - DOMAIN-SUFFIX,ggpht.com,PROXY
+      - DOMAIN-SUFFIX,doubleclick.net,PROXY
+      - DOMAIN-SUFFIX,firebase.com,PROXY
+      - DOMAIN-SUFFIX,firebaseapp.com,PROXY
+      - DOMAIN-SUFFIX,firebaseio.com,PROXY
+      - DOMAIN-SUFFIX,crashlytics.com,PROXY
+      - DOMAIN-SUFFIX,appspot.com,PROXY
+      - DOMAIN-SUFFIX,storage.googleapis.com,PROXY
+      - DOMAIN-SUFFIX,googlegroups.com,PROXY
+      - DOMAIN-SUFFIX,blogger.com,PROXY
+      - DOMAIN-SUFFIX,blogspot.com,PROXY
+      - DOMAIN-SUFFIX,google.ac,PROXY
